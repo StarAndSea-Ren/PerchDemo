@@ -1,10 +1,13 @@
 package ${PACKAGE_NAME};
-#parse("File Header.java")
 
 import android.app.Activity;
 import android.os.Bundle;
 
-#parse("Class Header.java")
+/**
+ * Created by renyh@shishike.com on ${DATE}.
+ * description：
+ */
+#parse("File Header.java")
 public class ${NAME} extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
