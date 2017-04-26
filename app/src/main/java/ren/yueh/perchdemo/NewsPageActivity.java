@@ -1,9 +1,11 @@
 package ren.yueh.perchdemo;
 
 import android.content.Intent;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -13,9 +15,6 @@ import android.widget.TextView;
 import com.yuehuaren.BaseNodeHolder;
 import com.yuehuaren.Perch;
 
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -45,6 +44,11 @@ public class NewsPageActivity extends AppCompatActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news_page);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        setTitle("");
+
         mContainer = (FrameLayout) findViewById(R.id.container);
         mRootScroll = (ScrollView) findViewById(R.id.root_scroll);
         mSwipe = (SwipeRefreshLayout) findViewById(R.id.swipe);
@@ -65,6 +69,15 @@ public class NewsPageActivity extends AppCompatActivity implements View.OnClickL
         newsHeadNodeViewAdapter = new NewsHeadNodeViewAdapter(getApplication());
 
         getNewsPageView();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void renderNewsHeader() {

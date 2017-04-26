@@ -1,12 +1,8 @@
 package ren.yueh.perchdemo;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,15 +11,10 @@ import android.widget.Toast;
 
 import com.yuehuaren.Perch;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import ren.yueh.perchdemo.adapter.NewsListViewAdapter;
-import ren.yueh.perchdemo.nodeview.ImgNodeViewAdapter;
 import ren.yueh.perchdemo.nodeview.NewsListNodeViewAdapter;
-import ren.yueh.perchdemo.nodeview.TextNodeViewAdapter;
 
 public class NewsListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
