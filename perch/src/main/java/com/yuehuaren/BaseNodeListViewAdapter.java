@@ -1,22 +1,23 @@
 package com.yuehuaren;
 
 import android.content.Context;
-import android.view.View;
+import android.support.v7.widget.RecyclerView;
 
 import org.jsoup.nodes.Node;
 
 import java.util.Arrays;
 import java.util.List;
 
+
 /**
  * HTML Node条件与Native View模板的转换适配器
- * 一个Node条件对应一个View模板，此时每找到一个和条件匹配的节点则生成一个View
- * Created by yuehuaren on 2017/4/21.
+ * 一个Node条件对应一个ListView模板，此时每找到一个和条件匹配的节点则缓存起来，所有节点遍历结束以后统一生成一个ListView
+ * Created by yuehuaren on 2017/4/25.
  */
 
-public abstract class BaseNodeViewAdapter<N extends BaseNodeHolder, V extends View> extends SuperNViewAdapter<N, V> {
+public abstract class BaseNodeListViewAdapter<N extends BaseNodeHolder, V extends RecyclerView> extends SuperNListViewAdapter<N, V> {
 
-    public BaseNodeViewAdapter(Context context) {
+    public BaseNodeListViewAdapter(Context context) {
         super(context);
     }
 
@@ -33,23 +34,17 @@ public abstract class BaseNodeViewAdapter<N extends BaseNodeHolder, V extends Vi
     }
 
     /**
-     * 匹配Node和View模板
+     * 判断传入的node是否匹配，如果匹配则解析，并将解析结果放入缓存
      *
      * @param node
      */
-    public View matchNodeView(Node node) {
+    public void matchNode(Node node) {
         if (nodeHolders != null && nodeHolders.size() > 0) {
             BaseNodeHolder nodeHolder = nodeHolders.get(0);
             if (nodeHolder.isSuitableNode(node)) {
                 nodeHolder.putResultAttrValue(node);
-                return attachView(nodeHolder.getResultAttrValues(), onCreateViewModule(context));
-            } else {
-                return null;
+                nodeResultsCache.add(nodeHolder.getResultAttrValues());
             }
-        } else {
-            return null;
         }
     }
-
-
 }

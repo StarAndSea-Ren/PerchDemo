@@ -1,8 +1,10 @@
-package ren.yueh.perchdemo;
+package ren.yueh.perchdemo.adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+
+import ren.yueh.perchdemo.NewsListFragment;
 
 /**
  * Created by yuehuaren on 2017/4/24.
@@ -17,24 +19,24 @@ public class NewsListPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        int color = 0xffff0000;
+        String newsListUrl = "";
         switch (position) {
             case 0:
-                color = 0xffff0000;
+                newsListUrl = "http://www.cs.swust.edu.cn/recent-news/school-news.html";
                 break;
             case 1:
-                color = 0xff00ff00;
+                newsListUrl = "http://www.cs.swust.edu.cn/students/students-news.html";
                 break;
             case 2:
-                color = 0xff0000ff;
+                newsListUrl = "http://www.cs.swust.edu.cn/recent-news/school-events.html";
                 break;
             case 3:
-                color = 0xff336699;
+                newsListUrl = "http://www.cs.swust.edu.cn/recent-news/Academic-events.html";
                 break;
             default:
                 break;
         }
-        return NewsListFragment.newInstance(color);
+        return NewsListFragment.newInstance(newsListUrl);
     }
 
     @Override

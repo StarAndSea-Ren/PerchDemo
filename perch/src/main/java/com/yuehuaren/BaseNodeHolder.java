@@ -43,7 +43,7 @@ public abstract class BaseNodeHolder<N extends Node> {
     protected Map<String, String> resultAttrValues = new HashMap<>();
 
     public BaseNodeHolder() {
-        tag = createTag();
+        tag = createTag().trim().replace(" ", "");
         knownAttrs = createKnownAttrs();
         unKnownAttrKeys = createUnKnownAttrKeys();
     }
@@ -92,8 +92,8 @@ public abstract class BaseNodeHolder<N extends Node> {
             Iterator<Map.Entry<String, String>> knownAttrIterator = knownAttrs.entrySet().iterator();
             while (knownAttrIterator.hasNext()) {
                 Map.Entry<String, String> entry = knownAttrIterator.next();
-                String value = node.attributes().get(entry.getKey());
-                if (TextUtils.isEmpty(value) || !value.equals(entry.getValue())) {
+                String value = node.attributes().get(entry.getKey()).trim();
+                if (TextUtils.isEmpty(value) || !value.equals(entry.getValue().trim())) {
                     return false;
                 }
             }
@@ -102,6 +102,7 @@ public abstract class BaseNodeHolder<N extends Node> {
         //Node中是否包含待求属性
         if (unKnownAttrKeys != null && !unKnownAttrKeys.isEmpty()) {
             for (String item : unKnownAttrKeys) {
+                item = item.trim().replaceAll(" ", "");
                 if (!item.equals(TEXT_KEY) && !node.attributes().hasKey(item)) {
                     return false;
                 }
@@ -129,10 +130,11 @@ public abstract class BaseNodeHolder<N extends Node> {
 
         Map<String, String> map = new HashMap<>();
         for (String item : unKnownAttrKeys) {
+            item = item.trim().replaceAll(" ", "");
             if (item.equals(TEXT_KEY)) {//节点中的文字
                 if (node instanceof Element) {
                     String txt = ((Element) node).text();
-                    txt.replaceAll("&nbsp;", "");
+                    txt = txt.replaceAll("&nbsp;", "").replaceAll("\\u00A0", "").trim();
                     if (!TextUtils.isEmpty(txt)) {
                         map.put(TEXT_KEY, txt);
                     }
@@ -140,13 +142,15 @@ public abstract class BaseNodeHolder<N extends Node> {
             } else if (item.equals("src") || item.equals("href") || item.equals("url")) {//和链接相关的属性加上baseUri
                 map.put(item, node.baseUri() + node.attr(item));
             } else {//节点中的其他值
-                map.put(item, node.attr(item));
+                map.put(item, node.attr(item).trim());
             }
         }
         resultAttrValues.putAll(map);
     }
 
     public Map<String, String> getResultAttrValues() {
-        return resultAttrValues;
+        Map<String, String> temp = new HashMap<>();
+        temp.putAll(resultAttrValues);
+        return temp;
     }
 }

@@ -1,4 +1,4 @@
-package ren.yueh.perchdemo;
+package ren.yueh.perchdemo.nodeview;
 
 import android.content.Context;
 import android.os.Handler;
@@ -21,6 +21,10 @@ import java.util.Map;
 public class ImgNodeViewAdapter extends BaseNodeViewAdapter<BaseNodeHolder, ImageView> {
     public ImgNodeViewAdapter(Context context) {
         super(context);
+    }
+
+    @Override
+    protected void onAttachFinished() {
     }
 
     @Override

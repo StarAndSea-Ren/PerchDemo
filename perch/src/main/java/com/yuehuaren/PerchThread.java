@@ -15,6 +15,7 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -34,13 +35,21 @@ public class PerchThread extends Thread {
     //根节点属性集合
     private Map<String, String> mRootAttrs;
 
-    //BaseNodeViewAdapter集合
-    private List<BaseNodeViewAdapter> mAdapters;
+    //SuperNViewAdapter集合
+    private List<SuperNViewAdapter> mViewAdapters = new ArrayList<>();
 
-    //解析结果view集合
-    private List<View> mResultViews = new ArrayList<>();
+    //SuperNListViewAdapter
+    private SuperNListViewAdapter mListViewAdapters;
+
     //解析结果view集合应该放入的容器
     private ViewGroup mContainerView;
+
+    //状态回调
+    private Perch.PerchCallBack mCallBack;
+
+    public void setCallBack(Perch.PerchCallBack callBack) {
+        this.mCallBack = callBack;
+    }
 
     public void setTimeOut(int timeOut) {
         this.mTimeOut = timeOut;
@@ -58,8 +67,12 @@ public class PerchThread extends Thread {
         this.mRootAttrs = rootAttrs;
     }
 
-    public void setAdapters(List<BaseNodeViewAdapter> adapters) {
-        this.mAdapters = adapters;
+    public void setViewAdapters(List<SuperNViewAdapter> adapters) {
+        this.mViewAdapters = adapters;
+    }
+
+    public void setListViewAdapter(SuperNListViewAdapter adapter) {
+        this.mListViewAdapters = adapter;
     }
 
     public void setContainerView(ViewGroup containerView) {
@@ -72,15 +85,48 @@ public class PerchThread extends Thread {
         try {
             doWork();
         } catch (IOException e) {
+            doCallBack(false, e.toString());
             e.printStackTrace();
         }
+    }
+
+    /**
+     * 将状态信息回调给UI线程
+     *
+     * @param success
+     * @param msg
+     */
+    private void doCallBack(final boolean success, final String msg) {
+        if (mCallBack == null){
+            return;
+        }
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                if (success) {
+                    mCallBack.onSuccess();
+                } else {
+                    mCallBack.onFail(msg);
+                }
+            }
+        });
     }
 
     /**
      * 主要工作流程
      */
     private void doWork() throws IOException {
-        if (TextUtils.isEmpty(mHtmlUrl) || mAdapters == null || mAdapters.isEmpty()) {
+        if (TextUtils.isEmpty(mHtmlUrl)) {//链接为空
+            doCallBack(false, "网页链接为空");
+            return;
+        }
+        if ((mViewAdapters == null || mViewAdapters.isEmpty()) && mListViewAdapters == null) {
+            doCallBack(false, "解析条件缺失");
+            return;
+        }
+        if ((mViewAdapters != null && !mViewAdapters.isEmpty()) && mListViewAdapters != null) {
+            doCallBack(false, "解析条件互斥");
             return;
         }
 
@@ -92,9 +138,6 @@ public class PerchThread extends Thread {
 
         //遍历匹配所有节点
         loopElemSet(rootElem.getAllElements());
-
-        //界面渲染
-        renderView();
     }
 
     /**
@@ -106,53 +149,122 @@ public class PerchThread extends Thread {
      * @throws IOException
      */
     private Document downloadDoc(String url, int timeOut) throws IOException {
-        Document doc = Jsoup.connect(mHtmlUrl).timeout(timeOut).get();
+        Document doc = Jsoup.connect(url).timeout(timeOut).get();
         return doc;
     }
 
     /**
-     * 遍历所有节点，判断是否为有用的节点，有则进行取值、关联view模板的操作
+     * 遍历匹配所有节点
      *
      * @param elemSet
      */
     private void loopElemSet(Elements elemSet) {
+        if (mViewAdapters != null && mViewAdapters.size() != 0) {
+            loopElemSetForView(elemSet);
+        } else if (mListViewAdapters != null) {
+            loopElemSetForListView(elemSet);
+        }
+    }
 
-        for (int i = 0; i < elemSet.size(); i++) {
+    /**
+     * 当view模板为普通的单个view时
+     *
+     * @param elemSet
+     */
+    private void loopElemSetForView(Elements elemSet) {
+        ///////////////////////////////////匹配相关/////////////////////////////////////
+        //解析结果view集合
+        List<View> mResultViews = new ArrayList<>();
+
+        for (int i = 0; i < mViewAdapters.size(); i++) {//通知所有Adapter初始化数据
+            SuperNVAdapter itemAdapter = mViewAdapters.get(i);
+            itemAdapter.init();
+        }
+
+        for (int i = 0; i < elemSet.size(); i++) {//匹配所有节点
             Element itemElem = elemSet.get(i);
-            for (int j = 0; j < mAdapters.size(); j++) {
-                BaseNodeViewAdapter itemAdapter = mAdapters.get(j);
-                View view = itemAdapter.matchNodeView(itemElem);
+            for (int j = 0; j < mViewAdapters.size(); j++) {
+                SuperNVAdapter itemAdapter = mViewAdapters.get(j);
+                View view = ((SuperNViewAdapter) itemAdapter).matchNodeView(itemElem);
                 if (view != null) {
                     mResultViews.add(view);
                 }
             }
         }
+
+        for (int i = 0; i < mViewAdapters.size(); i++) {//通知所有Adapter匹配过程结束
+            SuperNVAdapter itemAdapter = mViewAdapters.get(i);
+            itemAdapter.onAttachFinished();
+        }
+
+        ///////////////////////////////////界面相关/////////////////////////////////////
+        renderView(mResultViews, false);
+    }
+
+    /**
+     * 当view模板为ListView时
+     *
+     * @param elemSet
+     */
+    private void loopElemSetForListView(Elements elemSet) {
+        mListViewAdapters.init();//Adapter初始化数据
+
+        ///////////////////////////////////匹配相关/////////////////////////////////////
+        for (int i = 0; i < elemSet.size(); i++) {//匹配所有节点
+            Element itemElem = elemSet.get(i);
+            mListViewAdapters.matchNode(itemElem);
+        }
+        mListViewAdapters.onAttachFinished();
+
+        ///////////////////////////////////界面相关/////////////////////////////////////
+        renderView(Arrays.asList(mListViewAdapters.getListView()), true);
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                mListViewAdapters.notifyBindListViewData();
+            }
+        });
     }
 
     /**
      * 将view集合放入容器中，刷新
      */
-    private void renderView() {
-        if (mContainerView == null || mResultViews == null || mResultViews.isEmpty()) {
+    private void renderView(final List<View> resultViews, boolean isListView) {
+        if (mContainerView == null || resultViews == null || resultViews.isEmpty()) {
+            doCallBack(true, null);
             return;
         }
-        LinearLayout page = new LinearLayout(mContainerView.getContext());
-        final ScrollView scrollView = new ScrollView(mContainerView.getContext());
-        scrollView.addView(page);
-        scrollView.setVerticalScrollBarEnabled(false);
-        page.setOrientation(LinearLayout.VERTICAL);
-        //将view集合放入容器
-        for (int i = 0; i < mResultViews.size(); i++) {
-            page.addView(mResultViews.get(i));
-        }
-        Handler handler = new Handler(Looper.getMainLooper());
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                mContainerView.removeAllViews();
-                mContainerView.addView(scrollView);
+
+        if (isListView) {
+            Handler handler = new Handler(Looper.getMainLooper());
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    mContainerView.removeAllViews();
+                    mContainerView.addView(resultViews.get(0));
+                }
+            });
+        } else {
+            LinearLayout page = new LinearLayout(mContainerView.getContext());
+            final ScrollView scrollView = new ScrollView(mContainerView.getContext());
+            scrollView.addView(page);
+            scrollView.setVerticalScrollBarEnabled(false);
+            page.setOrientation(LinearLayout.VERTICAL);
+            //将view集合放入容器
+            for (int i = 0; i < resultViews.size(); i++) {
+                page.addView(resultViews.get(i));
             }
-        });
+            Handler handler = new Handler(Looper.getMainLooper());
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    mContainerView.removeAllViews();
+                    mContainerView.addView(scrollView);
+                }
+            });
+        }
+        doCallBack(true, null);
     }
 
     /**

@@ -1,6 +1,7 @@
-package ren.yueh.perchdemo;
+package ren.yueh.perchdemo.nodeview;
 
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.widget.TextView;
 
 import com.yuehuaren.BaseNodeHolder;
@@ -9,6 +10,8 @@ import com.yuehuaren.BaseNodeViewAdapter;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+
+import ren.yueh.perchdemo.R;
 
 /**
  * Created by yuehuaren on 2017/4/21.
@@ -28,7 +31,9 @@ public class TextNodeViewAdapter extends BaseNodeViewAdapter<BaseNodeHolder, Tex
 
     @Override
     protected TextView onCreateViewModule(Context context) {
-        return new TextView(context);
+        LayoutInflater inflater = LayoutInflater.from(context);
+        TextView textView = (TextView) inflater.inflate(R.layout.text_view_module, null, false);
+        return textView;
     }
 
     @Override
