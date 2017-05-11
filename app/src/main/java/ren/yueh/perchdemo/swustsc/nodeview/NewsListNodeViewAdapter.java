@@ -1,4 +1,4 @@
-package ren.yueh.perchdemo.nodeview;
+package ren.yueh.perchdemo.swustsc.nodeview;
 
 import android.app.Activity;
 import android.content.Context;
@@ -16,8 +16,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import ren.yueh.perchdemo.NewsPageActivity;
-import ren.yueh.perchdemo.adapter.NewsListViewAdapter;
+import ren.yueh.perchdemo.swustsc.NewsPageActivity;
+import ren.yueh.perchdemo.swustsc.adapter.NewsListViewAdapter;
 
 import static com.yuehuaren.BaseNodeHolder.TEXT_KEY;
 
@@ -123,7 +123,7 @@ public class NewsListNodeViewAdapter extends BaseNodesListViewAdapter<BaseNodeHo
         protected Map<String, String> createKnownAttrs() {
             Map<String, String> attr = new HashMap<>();
             attr.put("class", "newspostdate");
-            return null;
+            return attr;
         }
 
         @Override

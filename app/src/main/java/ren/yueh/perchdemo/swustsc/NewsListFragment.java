@@ -1,4 +1,4 @@
-package ren.yueh.perchdemo;
+package ren.yueh.perchdemo.swustsc;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -14,7 +14,8 @@ import com.yuehuaren.Perch;
 import java.util.HashMap;
 import java.util.Map;
 
-import ren.yueh.perchdemo.nodeview.NewsListNodeViewAdapter;
+import ren.yueh.perchdemo.R;
+import ren.yueh.perchdemo.swustsc.nodeview.NewsListNodeViewAdapter;
 
 public class NewsListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 

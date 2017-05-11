@@ -1,4 +1,4 @@
-package ren.yueh.perchdemo.nodeview;
+package ren.yueh.perchdemo.swustsc.nodeview;
 
 import android.content.Context;
 import android.view.View;
@@ -6,8 +6,6 @@ import android.widget.TextView;
 
 import com.yuehuaren.BaseNodeHolder;
 import com.yuehuaren.BaseNodesViewAdapter;
-
-import org.jsoup.nodes.Node;
 
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="4"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/news_title_img"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            tools:src="@drawable/ic_zhihu" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/news_title_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#111111"
+                android:textSize="19sp"
+                tools:text="扎克伯格的三千「超管」" />
+
+            <TextView
+                android:id="@+id/news_summary_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:textColor="#606a77"
+                android:textSize="17sp"
+                tools:text="鱼龙混杂的信息时代，内容审核是重中之重。" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/news_author_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:textColor="#777777"
+            android:textSize="15sp"
+            tools:text="极客视界" />
+
+        <TextView
+            android:id="@+id/news_date_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:textColor="#777777"
+            android:textSize="15sp"
+            tools:text="2017-04-26" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="7dp"
+        android:background="#dddddd" />
+</LinearLayout>

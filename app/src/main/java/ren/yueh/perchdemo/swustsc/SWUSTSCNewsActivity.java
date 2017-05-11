@@ -1,13 +1,14 @@
-package ren.yueh.perchdemo;
+package ren.yueh.perchdemo.swustsc;
 
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.design.widget.TabLayout;
 
-import ren.yueh.perchdemo.adapter.NewsListPagerAdapter;
+import ren.yueh.perchdemo.R;
+import ren.yueh.perchdemo.swustsc.adapter.NewsListPagerAdapter;
 
-public class MainActivity extends AppCompatActivity {
+public class SWUSTSCNewsActivity extends AppCompatActivity {
 
     private ViewPager mViewPager;
     private TabLayout mTabLayout;

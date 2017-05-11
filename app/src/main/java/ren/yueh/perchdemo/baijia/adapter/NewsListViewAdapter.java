@@ -1,12 +1,14 @@
-package ren.yueh.perchdemo.adapter;
+package ren.yueh.perchdemo.baijia.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.security.PublicKey;
 import java.util.List;
 import java.util.Map;
 
@@ -32,7 +34,7 @@ public class NewsListViewAdapter extends RecyclerView.Adapter<NewsListViewAdapte
 
     @Override
     public NewsListViewAdapter.ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.activity_news_list_item, parent, false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.baijia_news_list_item, parent, false);
         view.setOnClickListener(this);
         return new ItemViewHolder(view);
     }
@@ -58,12 +60,18 @@ public class NewsListViewAdapter extends RecyclerView.Adapter<NewsListViewAdapte
     }
 
     public static class ItemViewHolder extends RecyclerView.ViewHolder {
+        public ImageView titleImg;
         public TextView titleTxt;
+        public TextView summaryTxt;
+        public TextView authorTxt;
         public TextView dateTxt;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
+            titleImg = (ImageView)itemView.findViewById(R.id.news_title_img);
             titleTxt = (TextView) itemView.findViewById(R.id.news_title);
+            summaryTxt = (TextView)itemView.findViewById(R.id.news_summary_txt);
+            authorTxt = (TextView)itemView.findViewById(R.id.news_author_txt);
             dateTxt = (TextView) itemView.findViewById(R.id.news_date);
         }
     }

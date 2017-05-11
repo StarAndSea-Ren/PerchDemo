@@ -1,4 +1,4 @@
-package ren.yueh.perchdemo;
+package ren.yueh.perchdemo.swustsc;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,9 +20,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import ren.yueh.perchdemo.nodeview.ImgNodeViewAdapter;
-import ren.yueh.perchdemo.nodeview.NewsHeadNodeViewAdapter;
-import ren.yueh.perchdemo.nodeview.TextNodeViewAdapter;
+import ren.yueh.perchdemo.R;
+import ren.yueh.perchdemo.swustsc.nodeview.ImgNodeViewAdapter;
+import ren.yueh.perchdemo.swustsc.nodeview.NewsHeadNodeViewAdapter;
+import ren.yueh.perchdemo.swustsc.nodeview.TextNodeViewAdapter;
 
 public class NewsPageActivity extends AppCompatActivity implements View.OnClickListener {
     private ScrollView mRootScroll;

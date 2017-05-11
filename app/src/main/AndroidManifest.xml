@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="ren.yueh.perchdemo"
-          xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="ren.yueh.perchdemo">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -10,17 +10,17 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".swustsc.SWUSTSCNewsActivity" />
+        <activity android:name=".main.WelcomeActivity" />
+        <activity android:name=".swustsc.NewsPageActivity" />
+        <activity android:name=".main.HomeActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".WelcomeActivity">
-        </activity>
-        <activity android:name=".NewsPageActivity">
-        </activity>
+        <activity android:name=".baijia.BaiJiaNewsListActivity"></activity>
     </application>
 
 </manifest>

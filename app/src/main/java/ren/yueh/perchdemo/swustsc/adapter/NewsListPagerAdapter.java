@@ -1,10 +1,10 @@
-package ren.yueh.perchdemo.adapter;
+package ren.yueh.perchdemo.swustsc.adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import ren.yueh.perchdemo.NewsListFragment;
+import ren.yueh.perchdemo.swustsc.NewsListFragment;
 
 /**
  * Created by yuehuaren on 2017/4/24.
