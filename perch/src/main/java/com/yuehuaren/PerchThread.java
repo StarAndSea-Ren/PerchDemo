@@ -39,7 +39,7 @@ public class PerchThread extends Thread {
     private List<SuperNViewAdapter> mViewAdapters = new ArrayList<>();
 
     //SuperNListViewAdapter
-    private SuperNListViewAdapter mListViewAdapters;
+    private BaseNodeListViewAdapter mListViewAdapters;
 
     //解析结果view集合应该放入的容器
     private ViewGroup mContainerView;
@@ -71,7 +71,7 @@ public class PerchThread extends Thread {
         this.mViewAdapters = adapters;
     }
 
-    public void setListViewAdapter(SuperNListViewAdapter adapter) {
+    public void setListViewAdapter(BaseNodeListViewAdapter adapter) {
         this.mListViewAdapters = adapter;
     }
 
@@ -214,17 +214,9 @@ public class PerchThread extends Thread {
             Element itemElem = elemSet.get(i);
             mListViewAdapters.matchNode(itemElem);
         }
-        mListViewAdapters.onAttachFinished();
 
         ///////////////////////////////////界面相关/////////////////////////////////////
         renderView(Arrays.asList(mListViewAdapters.getListView()), true);
-        Handler handler = new Handler(Looper.getMainLooper());
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                mListViewAdapters.notifyBindListViewData();
-            }
-        });
     }
 
     /**
@@ -241,6 +233,7 @@ public class PerchThread extends Thread {
             handler.post(new Runnable() {
                 @Override
                 public void run() {
+                    mListViewAdapters.onAttachFinished();
                     mContainerView.removeAllViews();
                     mContainerView.addView(resultViews.get(0));
                 }

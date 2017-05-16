@@ -3,8 +3,9 @@ package ren.yueh.perchdemo.baijia.nodeview;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 
+import com.yuehuaren.BaseNodeGroupHolder;
 import com.yuehuaren.BaseNodeHolder;
-import com.yuehuaren.BaseNodesListViewAdapter;
+import com.yuehuaren.BaseNodeListViewAdapter;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -15,16 +16,17 @@ import java.util.Map;
  * Created by yueh on 2017/5/11.
  */
 
-public class NewsListNodeViewAdapter extends BaseNodesListViewAdapter<BaseNodeHolder, RecyclerView> {
+public class NewsListNodeViewAdapter extends BaseNodeListViewAdapter<BaseNodeGroupHolder, RecyclerView> {
 
     public NewsListNodeViewAdapter(Context context) {
         super(context);
     }
 
     @Override
-    protected List<BaseNodeHolder> onCreateNodeHolders() {
-        return null;
+    protected void notifyItemMatch(List<Map<String, String>> nodeResultsData) {
+
     }
+
 
     @Override
     protected RecyclerView onCreateViewModule(Context context) {
@@ -32,8 +34,8 @@ public class NewsListNodeViewAdapter extends BaseNodesListViewAdapter<BaseNodeHo
     }
 
     @Override
-    protected void bindListViewData(List<Map<String, String>> nodeResultsData, RecyclerView recyclerView) {
-
+    protected BaseNodeGroupHolder onCreateNodeHolder() {
+        return null;
     }
 
     public static class TitleImgNodeHolder extends BaseNodeHolder{
@@ -131,5 +133,4 @@ public class NewsListNodeViewAdapter extends BaseNodesListViewAdapter<BaseNodeHo
             return Arrays.asList(TEXT_KEY);
         }
     }
-
 }

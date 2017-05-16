@@ -12,6 +12,9 @@ import java.util.Map;
 
 /**
  * HTML节点基类
+ * 用于描述一个Html节点的属性
+ * Perch使用者需录入一个节点的已知属性和待求属性
+ * 该类还实现了Node匹配的算法
  * Created by yuehuaren on 2017/4/21.
  */
 
@@ -21,6 +24,7 @@ public abstract class BaseNodeHolder<N extends Node> {
      * 如果需要获取如“<p>hello perch</p>”中的“hello perch”文字，则用此Key
      */
     public static final String TEXT_KEY = "child_nodes_text";
+    public static final String HOLDER_CLASS_NAME = "holder_class_name";
 
     /**
      * HTML标签
@@ -43,7 +47,7 @@ public abstract class BaseNodeHolder<N extends Node> {
     protected Map<String, String> resultAttrValues = new HashMap<>();
 
     public BaseNodeHolder() {
-        tag = createTag().trim().replace(" ", "");
+        tag = (createTag() == null ? null : createTag().trim().replace(" ", ""));
         knownAttrs = createKnownAttrs();
         unKnownAttrKeys = createUnKnownAttrKeys();
     }

@@ -2,11 +2,16 @@ package com.yuehuaren;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
+import org.jsoup.nodes.Element;
 import org.jsoup.nodes.Node;
+import org.jsoup.select.Elements;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -15,11 +20,28 @@ import java.util.List;
  * Created by yuehuaren on 2017/4/25.
  */
 
-public abstract class BaseNodeListViewAdapter<N extends BaseNodeHolder, V extends RecyclerView> extends SuperNListViewAdapter<N, V> {
+public abstract class BaseNodeListViewAdapter<N extends BaseNodeGroupHolder, V extends View> extends SuperNVAdapter<V> {
+
+    private BaseNodeGroupHolder nodeGroupHolder;
 
     public BaseNodeListViewAdapter(Context context) {
         super(context);
+        nodeGroupHolder = onCreateNodeHolder();
     }
+
+    /**
+     * 从item中找到一项匹配
+     *
+     * @param nodeResultsData
+     * @return
+     */
+    protected abstract void notifyItemMatch(List<Map<String, String>> nodeResultsData);
+
+
+    public V getListView() {
+        return viewModule;
+    }
+
 
     /**
      * 录入一个节点条件
@@ -28,22 +50,17 @@ public abstract class BaseNodeListViewAdapter<N extends BaseNodeHolder, V extend
      */
     protected abstract N onCreateNodeHolder();
 
-    @Override
-    protected List<N> onCreateNodeHolders() {
-        return Arrays.asList(onCreateNodeHolder());
-    }
-
     /**
      * 判断传入的node是否匹配，如果匹配则解析，并将解析结果放入缓存
      *
      * @param node
      */
-    public void matchNode(Node node) {
-        if (nodeHolders != null && nodeHolders.size() > 0) {
-            BaseNodeHolder nodeHolder = nodeHolders.get(0);
-            if (nodeHolder.isSuitableNode(node)) {
-                nodeHolder.putResultAttrValue(node);
-                nodeResultsCache.add(nodeHolder.getResultAttrValues());
+    public void matchNode(Element node) {
+        if (nodeGroupHolder != null && !nodeGroupHolder.isRootNodeNull()) {
+            //Node满足录入的Root Node条件
+            if (nodeGroupHolder.isSuitableRootNode(node)) {
+                nodeGroupHolder.loopSonNodeHolders(node.getAllElements());
+                notifyItemMatch(nodeGroupHolder.getResult());
             }
         }
     }

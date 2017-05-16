@@ -10,9 +10,9 @@ import java.util.List;
  * Created by yuehuaren on 2017/4/25.
  */
 
-public abstract class SuperNVAdapter<N extends BaseNodeHolder, V extends View> {
+public abstract class SuperNVAdapter<V extends View> {
     protected V viewModule;
-    protected List<N> nodeHolders;
+
     protected Context context;
 
     public SuperNVAdapter(Context context) {
@@ -21,7 +21,6 @@ public abstract class SuperNVAdapter<N extends BaseNodeHolder, V extends View> {
 
     public void init() {
         viewModule = onCreateViewModule(context);
-        nodeHolders = onCreateNodeHolders();
     }
 
     /**
@@ -31,19 +30,10 @@ public abstract class SuperNVAdapter<N extends BaseNodeHolder, V extends View> {
     }
 
     /**
-     * 录入节点条件集合
-     *
-     * @return
-     */
-    protected abstract List<N> onCreateNodeHolders();
-
-    /**
      * 录入View模板
      *
      * @param context
      * @return
      */
     protected abstract V onCreateViewModule(Context context);
-
-
 }

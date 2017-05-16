@@ -5,15 +5,19 @@ import android.view.View;
 
 import org.jsoup.nodes.Node;
 
+import java.util.List;
 import java.util.Map;
 
 /**
  * Created by yuehuaren on 2017/4/25.
  */
 
-public abstract class SuperNViewAdapter<N extends BaseNodeHolder, V extends View> extends SuperNVAdapter<N, V> {
+public abstract class SuperNViewAdapter<N extends BaseNodeHolder, V extends View> extends SuperNVAdapter<V> {
+    protected List<N> nodeHolders;
+
     public SuperNViewAdapter(Context context) {
         super(context);
+        nodeHolders = onCreateNodeHolders();
     }
 
     /**
@@ -31,4 +35,11 @@ public abstract class SuperNViewAdapter<N extends BaseNodeHolder, V extends View
      * @param node
      */
     public abstract View matchNodeView(Node node);
+
+    /**
+     * 录入节点条件集合
+     *
+     * @return
+     */
+    protected abstract List<N> onCreateNodeHolders();
 }

@@ -7,8 +7,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.yuehuaren.BaseNodeGroupHolder;
 import com.yuehuaren.BaseNodeHolder;
-import com.yuehuaren.BaseNodesListViewAdapter;
+import com.yuehuaren.BaseNodeListViewAdapter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,7 +26,7 @@ import static com.yuehuaren.BaseNodeHolder.TEXT_KEY;
  * Created by yuehuaren on 2017/4/24.
  */
 
-public class NewsListNodeViewAdapter extends BaseNodesListViewAdapter<BaseNodeHolder, RecyclerView> {
+public class NewsListNodeViewAdapter extends BaseNodeListViewAdapter<BaseNodeGroupHolder, RecyclerView> {
 
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mManager;
@@ -50,10 +51,24 @@ public class NewsListNodeViewAdapter extends BaseNodesListViewAdapter<BaseNodeHo
         });
     }
 
+    @Override
+    protected void notifyItemMatch(List<Map<String, String>> nodeResultsData) {
+        Map<String, String> tempMap = new HashMap<>();
+        for (int i = 0; i < nodeResultsData.size(); i++) {
+            if (NewsTitleNodeHolder.class.getName().equals(nodeResultsData.get(i).get(BaseNodeHolder.HOLDER_CLASS_NAME))) {
+                tempMap.putAll(nodeResultsData.get(i));
+            } else if (NewsDateNodeHolder.class.getName().equals(nodeResultsData.get(i).get(BaseNodeHolder.HOLDER_CLASS_NAME))) {
+                String dateStr = nodeResultsData.get(i).get(TEXT_KEY);
+                tempMap.put("date", dateStr);
+            }
+        }
+        mData.add(tempMap);
+    }
 
     @Override
-    protected List<BaseNodeHolder> onCreateNodeHolders() {
-        return Arrays.asList(new NewsTitleNodeHolder(), new NewsDateNodeHolder());
+    protected void onAttachFinished() {
+        super.onAttachFinished();
+        mRecyclerView.getAdapter().notifyDataSetChanged();
     }
 
     public void setParentActivity(Activity activity) {
@@ -68,30 +83,33 @@ public class NewsListNodeViewAdapter extends BaseNodesListViewAdapter<BaseNodeHo
     }
 
     @Override
-    protected void bindListViewData(List<Map<String, String>> nodeResultsData, RecyclerView recyclerView) {
-        List<Map<String, String>> tempList = new ArrayList<>();
-        Map<String, String> tempMap = null;
-        for (int i = 0; i < nodeResultsData.size(); i++) {
-            if (nodeResultsData.get(i).size() == 2) {
-                tempMap = new HashMap<>();
-                tempMap.putAll(nodeResultsData.get(i));
-            } else if (nodeResultsData.get(i).size() == 1) {
-                String dateStr = nodeResultsData.get(i).get(TEXT_KEY);
-                Map<String, String> map = new HashMap<>();
-                map.put("date", dateStr);
-                tempMap.putAll(map);
-                tempList.add(tempMap);
-                tempMap = null;
-            }
-        }
-        mData.clear();
-        mData.addAll(tempList);
-        recyclerView.getAdapter().notifyDataSetChanged();
+    protected BaseNodeGroupHolder onCreateNodeHolder() {
+        return new GroupHolder();
     }
 
     @Override
     protected RecyclerView onCreateViewModule(Context context) {
         return mRecyclerView;
+    }
+
+    public static class GroupHolder extends BaseNodeGroupHolder {
+
+        @Override
+        protected List<BaseNodeHolder> createSonNodeHolders() {
+            return Arrays.asList(new NewsTitleNodeHolder(), new NewsDateNodeHolder());
+        }
+
+        @Override
+        protected String createRootTag() {
+            return "div";
+        }
+
+        @Override
+        protected Map<String, String> createRootKnownAttrs() {
+            Map<String, String> attr = new HashMap<>();
+            attr.put("class", "newsSummarytitle");
+            return attr;
+        }
     }
 
     public static class NewsTitleNodeHolder extends BaseNodeHolder {

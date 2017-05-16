@@ -25,7 +25,7 @@ public class Perch {
     private List<SuperNViewAdapter> mViewAdapters = new ArrayList<>();
 
     //SuperNListViewAdapter
-    private SuperNListViewAdapter mListViewAdapters;
+    private BaseNodeListViewAdapter mListViewAdapters;
 
     //解析结果view集合应该放入的容器
     private ViewGroup mContainerView;
@@ -69,7 +69,7 @@ public class Perch {
         return this;
     }
 
-    public Perch setNodeListViewAdapter(SuperNListViewAdapter adapter) {
+    public Perch setNodeListViewAdapter(BaseNodeListViewAdapter adapter) {
         if (mViewAdapters.size() != 0) {
             Log.e("Perch", "NViewAdapter已存在,NListViewAdapter不能与其同时存在");
             if (mCallBack != null) {

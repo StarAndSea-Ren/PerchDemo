@@ -16,7 +16,7 @@ import java.util.Map;
  * Created by yuehuaren on 2017/4/25.
  */
 
-public abstract class SuperNListViewAdapter<N extends BaseNodeHolder, V extends RecyclerView> extends SuperNVAdapter<N, V> {
+public abstract class SuperNListViewAdapter<N extends BaseNodeGroupHolder, V extends RecyclerView> extends SuperNVAdapter<V> {
     //缓存匹配的Node产生的Result
     protected List<Map<String, String>> nodeResultsCache = new ArrayList<>();
 
