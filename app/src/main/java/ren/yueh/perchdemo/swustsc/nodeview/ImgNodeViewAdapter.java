@@ -7,8 +7,8 @@ import android.text.TextUtils;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.yuehuaren.BaseNodeHolder;
-import com.yuehuaren.BaseNodeViewAdapter;
+import com.yuehuaren.nodeholder.BaseNodeHolder;
+import com.yuehuaren.adapter.BaseNodeViewAdapter;
 
 import java.util.Arrays;
 import java.util.List;
@@ -24,7 +24,7 @@ public class ImgNodeViewAdapter extends BaseNodeViewAdapter<BaseNodeHolder, Imag
     }
 
     @Override
-    protected void onAttachFinished() {
+    public void onAttachFinished() {
     }
 
     @Override

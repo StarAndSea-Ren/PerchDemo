@@ -1,15 +1,12 @@
-package com.yuehuaren;
+package com.yuehuaren.adapter;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import org.jsoup.nodes.Element;
-import org.jsoup.nodes.Node;
-import org.jsoup.select.Elements;
+import com.yuehuaren.nodeholder.BaseNodeGroupHolder;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import org.jsoup.nodes.Element;
+
 import java.util.List;
 import java.util.Map;
 

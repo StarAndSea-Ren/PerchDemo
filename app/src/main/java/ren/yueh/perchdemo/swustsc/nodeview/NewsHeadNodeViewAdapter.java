@@ -4,8 +4,8 @@ import android.content.Context;
 import android.view.View;
 import android.widget.TextView;
 
-import com.yuehuaren.BaseNodeHolder;
-import com.yuehuaren.BaseNodesViewAdapter;
+import com.yuehuaren.nodeholder.BaseNodeHolder;
+import com.yuehuaren.adapter.BaseNodesViewAdapter;
 
 import java.util.ArrayList;
 import java.util.Arrays;

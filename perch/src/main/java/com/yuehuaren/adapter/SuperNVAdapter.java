@@ -1,4 +1,4 @@
-package com.yuehuaren;
+package com.yuehuaren.adapter;
 
 import android.content.Context;
 import android.view.View;
@@ -26,7 +26,7 @@ public abstract class SuperNVAdapter<V extends View> {
     /**
      * 当HTML文档中所有节点遍历完毕，不会再调用attachView()时，此函数被调用
      */
-    protected void onAttachFinished() {
+    public void onAttachFinished() {
     }
 
     /**

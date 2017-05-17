@@ -12,7 +12,7 @@ import android.widget.FrameLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.yuehuaren.BaseNodeHolder;
+import com.yuehuaren.nodeholder.BaseNodeHolder;
 import com.yuehuaren.Perch;
 
 import java.util.HashMap;

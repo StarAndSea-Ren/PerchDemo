@@ -1,7 +1,9 @@
-package com.yuehuaren;
+package com.yuehuaren.adapter;
 
 import android.content.Context;
 import android.view.View;
+
+import com.yuehuaren.nodeholder.BaseNodeHolder;
 
 import org.jsoup.nodes.Node;
 

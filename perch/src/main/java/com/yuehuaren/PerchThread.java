@@ -8,6 +8,10 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
+import com.yuehuaren.adapter.BaseNodeListViewAdapter;
+import com.yuehuaren.adapter.SuperNVAdapter;
+import com.yuehuaren.adapter.SuperNViewAdapter;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;

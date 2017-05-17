@@ -1,6 +1,8 @@
-package com.yuehuaren;
+package com.yuehuaren.nodeholder;
 
 import android.text.TextUtils;
+
+import com.yuehuaren.nodeholder.BaseNodeHolder;
 
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -124,7 +126,7 @@ public abstract class BaseNodeGroupHolder<N extends Element> extends BaseNodeHol
      * 获取匹配结果
      * @return
      */
-    protected List<Map<String, String>> getResult() {
+    public List<Map<String, String>> getResult() {
         if (sonNodeHolders == null || sonNodeHolders.size() == 0) {
             return null;
         }
@@ -138,7 +140,7 @@ public abstract class BaseNodeGroupHolder<N extends Element> extends BaseNodeHol
         return result;
     }
 
-    protected boolean isRootNodeNull() {
+    public boolean isRootNodeNull() {
         return TextUtils.isEmpty(rootTag) && (rootKnownAttrs == null || rootKnownAttrs.isEmpty());
     }
 }

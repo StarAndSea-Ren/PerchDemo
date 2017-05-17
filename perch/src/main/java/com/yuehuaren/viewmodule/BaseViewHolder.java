@@ -1,4 +1,4 @@
-package com.yuehuaren;
+package com.yuehuaren.viewmodule;
 
 import android.content.Context;
 import android.view.View;

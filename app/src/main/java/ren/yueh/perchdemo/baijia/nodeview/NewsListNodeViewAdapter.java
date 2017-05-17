@@ -3,9 +3,9 @@ package ren.yueh.perchdemo.baijia.nodeview;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 
-import com.yuehuaren.BaseNodeGroupHolder;
-import com.yuehuaren.BaseNodeHolder;
-import com.yuehuaren.BaseNodeListViewAdapter;
+import com.yuehuaren.nodeholder.BaseNodeGroupHolder;
+import com.yuehuaren.nodeholder.BaseNodeHolder;
+import com.yuehuaren.adapter.BaseNodeListViewAdapter;
 
 import java.util.Arrays;
 import java.util.HashMap;

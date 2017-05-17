@@ -3,6 +3,9 @@ package com.yuehuaren;
 import android.util.Log;
 import android.view.ViewGroup;
 
+import com.yuehuaren.adapter.BaseNodeListViewAdapter;
+import com.yuehuaren.adapter.SuperNViewAdapter;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;

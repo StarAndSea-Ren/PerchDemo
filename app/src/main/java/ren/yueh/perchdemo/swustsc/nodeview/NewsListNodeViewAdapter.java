@@ -7,9 +7,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.yuehuaren.BaseNodeGroupHolder;
-import com.yuehuaren.BaseNodeHolder;
-import com.yuehuaren.BaseNodeListViewAdapter;
+import com.yuehuaren.nodeholder.BaseNodeGroupHolder;
+import com.yuehuaren.nodeholder.BaseNodeHolder;
+import com.yuehuaren.adapter.BaseNodeListViewAdapter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,7 +20,7 @@ import java.util.Map;
 import ren.yueh.perchdemo.swustsc.NewsPageActivity;
 import ren.yueh.perchdemo.swustsc.adapter.NewsListViewAdapter;
 
-import static com.yuehuaren.BaseNodeHolder.TEXT_KEY;
+import static com.yuehuaren.nodeholder.BaseNodeHolder.TEXT_KEY;
 
 /**
  * Created by yuehuaren on 2017/4/24.
@@ -66,7 +66,7 @@ public class NewsListNodeViewAdapter extends BaseNodeListViewAdapter<BaseNodeGro
     }
 
     @Override
-    protected void onAttachFinished() {
+    public void onAttachFinished() {
         super.onAttachFinished();
         mRecyclerView.getAdapter().notifyDataSetChanged();
     }
